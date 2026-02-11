@@ -3,140 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Valentine 🌹</title>
+    <title>For My Yashu ❤️</title>
     <style>
-        :root { --rose: #ff4d6d; --petal: #fff0f3; --shadow: rgba(255, 77, 109, 0.2); }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: var(--petal); overflow: hidden; height: 100%; }
+        :root { --rose: #ff4d6d; --petal: #fff0f3; --soft-pink: #ffccd5; }
+        body, html { margin: 0; padding: 0; font-family: 'Georgia', serif; background: var(--petal); height: 100%; overflow: hidden; }
 
         /* --- LANDING PAGE --- */
         #landing-page {
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle, #fff 0%, #ffeef2 100%); z-index: 100; position: relative; transition: 0.8s;
+            background: white; position: relative; z-index: 100; transition: 0.8s ease-in-out;
         }
-        .bear-img { width: 250px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
-        .question { color: #333; font-size: 2.2rem; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Animated Heart */
+        .heart {
+            background-color: var(--rose); display: inline-block; height: 80px; position: relative; transform: rotate(-45deg); width: 80px;
+            animation: heartbeat 1.2s infinite; margin-bottom: 50px;
+        }
+        .heart:before, .heart:after { content: ""; background-color: var(--rose); border-radius: 50%; height: 80px; position: absolute; width: 80px; }
+        .heart:before { top: -40px; left: 0; }
+        .heart:after { left: 40px; top: 0; }
+        @keyframes heartbeat { 0% { transform: rotate(-45deg) scale(1); } 20% { transform: rotate(-45deg) scale(1.1); } 100% { transform: rotate(-45deg) scale(1); } }
+
+        .question { color: #333; font-size: 1.8rem; text-align: center; margin-bottom: 30px; font-weight: normal; }
         .btn-group { display: flex; gap: 20px; }
-        button { padding: 12px 35px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
-        #yes-btn { background: #4ade80; color: white; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.4); }
-        #no-btn { background: #ff4d6d; color: white; position: absolute; transition: 0.2s ease; }
+        button { padding: 12px 35px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        #yes-btn { background: #4ade80; color: white; box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3); }
+        #no-btn { background: var(--rose); color: white; position: absolute; }
 
-        /* --- DASHBOARD LAYOUT --- */
-        #dashboard { display: none; height: 100vh; opacity: 0; transition: 1s; }
-        .sidebar { width: 280px; background: white; border-right: 2px solid var(--petal); display: flex; flex-direction: column; padding: 30px; box-shadow: 10px 0 30px rgba(0,0,0,0.03); }
-        .sidebar h2 { color: var(--rose); font-size: 1.6rem; margin-bottom: 40px; text-align: center; }
-        .nav-btn { background: none; border: none; padding: 15px 20px; margin: 8px 0; text-align: left; font-size: 1rem; border-radius: 12px; color: #666; cursor: pointer; transition: 0.3s; }
-        .nav-btn:hover, .nav-btn.active { background: var(--rose); color: white; }
+        /* --- DASHBOARD --- */
+        #dashboard { display: none; height: 100vh; opacity: 0; transition: 1s; display: flex; }
+        .sidebar { width: 220px; background: white; border-right: 1px solid var(--soft-pink); display: flex; flex-direction: column; padding: 30px; }
+        .sidebar h2 { color: var(--rose); font-size: 1.4rem; margin-bottom: 30px; font-style: italic; }
+        .nav-btn { background: none; border: none; padding: 15px; margin: 5px 0; text-align: left; font-size: 0.95rem; border-radius: 10px; color: #555; cursor: pointer; transition: 0.3s; }
+        .nav-btn:hover { background: var(--petal); }
+        .nav-btn.active { background: var(--rose); color: white; }
 
-        .main-view { flex: 1; padding: 50px; overflow-y: auto; background: #fffbff; position: relative; }
-        .section { display: none; max-width: 800px; margin: auto; animation: slideUp 0.5s ease; }
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; background: #fffcfc; display: flex; justify-content: center; }
+        .section { display: none; width: 100%; max-width: 650px; animation: fadeIn 0.6s ease; }
         .section.active { display: block; }
 
-        /* --- CONTENT STYLES --- */
-        .card { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 40px var(--shadow); border: 1px solid var(--petal); line-height: 1.8; color: #444; }
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .photo-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* --- CONTENT CARDS --- */
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1); border: 1px solid var(--soft-pink); color: #444; line-height: 1.8; }
+        .card h1 { color: var(--rose); font-size: 1.5rem; margin-top: 0; }
         
-        .song-card { display: flex; align-items: center; background: #fff9fa; padding: 15px; border-radius: 18px; margin-bottom: 15px; border: 1px solid #ffe5e9; }
-        .song-card img { width: 100px; border-radius: 10px; margin-right: 20px; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .photo-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; border: 5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .song-card { display: flex; align-items: center; background: #fff9fa; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid var(--soft-pink); }
+        .song-card img { width: 80px; height: 80px; border-radius: 8px; margin-right: 20px; }
         .song-info h3 { margin: 0; color: var(--rose); font-size: 1.1rem; }
-        .song-info p { margin: 5px 0 0; font-size: 0.9rem; font-style: italic; }
+        .song-info p { margin: 5px 0 0; font-size: 0.85rem; font-style: italic; color: #777; }
 
-        /* --- ANIMATIONS --- */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Corner Roses */
-        .rose-deco { position: fixed; width: 120px; opacity: 0.8; pointer-events: none; }
-        .top-right { top: 0; right: 0; }
-        .bottom-right { bottom: 0; right: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <img src="https://img.icons8.com/color/500/rose.png" class="rose-deco top-right">
-    <img src="https://img.icons8.com/color/500/rose.png" class="rose-deco bottom-right">
-
     <div id="landing-page">
-        <img src="https://media.tenor.com/97yX9Gpx7m8AAAAj/love-bear.gif" class="bear-img" alt="Cute Bear">
-        <h1 class="question">Will you be my Valentine?</h1>
+        <div class="heart"></div>
+        <h1 class="question">Will you be my Valentine, Yashu?</h1>
         <div class="btn-group">
-            <button id="yes-btn" onclick="acceptValentine()">Yes</button>
-            <button id="no-btn" onmouseover="dodge()">No</button>
+            <button id="yes-btn" onclick="openDashboard()">Yes</button>
+            <button id="no-btn" onmouseover="moveNo()">No</button>
         </div>
     </div>
 
-    <div id="dashboard" style="display: flex;">
+    <div id="dashboard">
         <div class="sidebar">
-            <h2>For You ❤️</h2>
-            <button class="nav-btn active" onclick="tab('letter')">💌 My Letter</button>
-            <button class="nav-btn" onclick="tab('memories')">📸 Memories</button>
-            <button class="nav-btn" onclick="tab('songs')">🎵 Our Songs</button>
+            <h2>Our Love ❤️</h2>
+            <button class="nav-btn active" onclick="showTab('letter', this)">💌 My Letter</button>
+            <button class="nav-btn" onclick="showTab('memories', this)">📸 Memories</button>
+            <button class="nav-btn" onclick="showTab('songs', this)">🎵 Our Songs</button>
         </div>
 
-        <div class="main-view">
+        <div class="main-content">
             <div id="letter" class="section active">
                 <div class="card">
-                    <h1 style="color: var(--rose);">Dear [Her Name],</h1>
-                    <p>I know we are [Number] miles apart, but every day I wake up feeling like the luckiest person in the world because I have you.</p>
-                    <p>This website is just a small piece of my heart to remind you how much you mean to me. I can't wait until we don't have to say goodbye at airports anymore.</p>
-                    <p>I love you forever.</p>
+                    <h1>Dear Yashu,</h1>
+                    <p>The second I layed my eyes on you, I only ever wanted you. I fell in love with every quality about you. No matter how bad of a day I had if i'm on call with you I will always laugh and smile. You are genuinely an angel. You bring color, sunshine and all the happy shit in my life. Every time you smile i feel like i'm complete. I turly believe ur my otgher half and we are meant to be together.</p>
+                    <p>Yashu I know that we are 1016 miles apart, but every day I wake up feeling like the luckiest person in the world because I have you. I know the distance makes everything hard and we have bad fights occasionaly but I promise I will never leave your side or give up. I can't wait for the day we live together and I beg it happens soon. You're my everything and you will be forever.</p>
+                    <p><strong>I love you more.</strong></p>
                 </div>
             </div>
 
             <div id="memories" class="section">
-                <h1 style="color: var(--rose);">Our Moments</h1>
                 <div class="photo-grid">
-                    <img src="LINK_TO_PHOTO_1" alt="Us">
-                    <img src="LINK_TO_PHOTO_2" alt="Us">
-                    <img src="LINK_TO_PHOTO_3" alt="Us">
-                    <img src="LINK_TO_PHOTO_4" alt="Us">
+                    <img src="PASTE_PHOTO_1_HERE" alt="Memory">
+                    <img src="PASTE_PHOTO_2_HERE" alt="Memory">
+                    <img src="PASTE_PHOTO_3_HERE" alt="Memory">
+                    <img src="PASTE_PHOTO_4_HERE" alt="Memory">
                 </div>
             </div>
 
             <div id="songs" class="section">
-                <h1 style="color: var(--rose);">Soundtrack of Us</h1>
                 <div class="song-card">
-                    <img src="LINK_TO_SPOTIFY_CODE_1" alt="Scan me">
-                    <div class="song-info">
-                        <h3>Song Name 1</h3>
-                        <p>"This reminds me of..."</p>
-                    </div>
+                    <img src="SPOTIFY_CODE_1" alt="Scan">
+                    <div class="song-info"><h3>Song Name</h3><p>"Reminds me of our late night calls."</p></div>
                 </div>
                 <div class="song-card">
-                    <img src="LINK_TO_SPOTIFY_CODE_2" alt="Scan me">
-                    <div class="song-info">
-                        <h3>Song Name 2</h3>
-                        <p>"I listen to this when I miss you most."</p>
-                    </div>
+                    <img src="SPOTIFY_CODE_2" alt="Scan">
+                    <div class="song-info"><h3>Song Name</h3><p>"The lyrics describe you perfectly."</p></div>
                 </div>
                 <div class="song-card">
-                    <img src="LINK_TO_SPOTIFY_CODE_3" alt="Scan me">
-                    <div class="song-info">
-                        <h3>Song Name 3</h3>
-                        <p>"Our first song."</p>
-                    </div>
+                    <img src="SPOTIFY_CODE_3" alt="Scan">
+                    <div class="song-info"><h3>Song Name</h3><p>"I listen to this when I miss you most."</p></div>
                 </div>
                 <div class="song-card">
-                    <img src="LINK_TO_SPOTIFY_CODE_4" alt="Scan me">
-                    <div class="song-info">
-                        <h3>Song Name 4</h3>
-                        <p>"Thinking of our future."</p>
-                    </div>
+                    <img src="SPOTIFY_CODE_4" alt="Scan">
+                    <div class="song-info"><h3>Song Name</h3><p>"Our future anthem."</p></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function dodge() {
+        function moveNo() {
             const btn = document.getElementById('no-btn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 50);
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        function acceptValentine() {
+        function openDashboard() {
             document.getElementById('landing-page').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('landing-page').style.display = 'none';
@@ -146,11 +135,11 @@
             }, 800);
         }
 
-        function tab(id) {
+        function showTab(sectionId, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            event.currentTarget.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+            btn.classList.add('active');
         }
     </script>
 </body>
